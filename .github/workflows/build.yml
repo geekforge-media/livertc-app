@@ -23,6 +23,12 @@ jobs:
         sed -i '/import android.support.annotation.NonNull;/d' android/app/src/main/java/com/watchcam/*.java
         sed -i 's/@NonNull//g' android/app/src/main/java/com/watchcam/*.java
 
+    - name: Force Modern Compile SDK Versions
+      run: |
+        sed -i 's/compileSdkVersion .*/compileSdkVersion 34/g' app/build.gradle
+        sed -i 's/targetSdkVersion .*/targetSdkVersion 34/g' app/build.gradle
+      working-directory: android
+
     - name: Force AndroidX Environment
       run: |
         echo "android.useAndroidX=true" > gradle.properties
