@@ -1,0 +1,14 @@
+{
+  "name": "watchcam",
+  "version": "1.0.0",
+  "description": "WatchCam - Continuous camera streaming system",
+  "private": true,
+  "scripts": {
+    "setup":         "node scripts/setup.js",
+    "build:android": "node scripts/build-android.js",
+    "build:windows": "node scripts/build-windows.js",
+    "build:all":     "npm run build:android && npm run build:windows"
+  },
+  "dependencies": {},
+  "devDependencies": {}
+}
