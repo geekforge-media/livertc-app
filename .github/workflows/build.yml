@@ -18,11 +18,15 @@ jobs:
         distribution: 'temurin'
         cache: gradle
 
-    - name: Force Fix AndroidX Imports Across Files
+    - name: Clean Missing Annotations Across Source Files
+      run: |
+        sed -i '/import android.support.annotation.NonNull;/d' android/app/src/main/java/com/watchcam/*.java
+        sed -i 's/@NonNull//g' android/app/src/main/java/com/watchcam/*.java
+
+    - name: Force AndroidX Environment
       run: |
         echo "android.useAndroidX=true" > gradle.properties
         echo "android.enableJetifier=true" >> gradle.properties
-        find app/src/main/java -type f -name "*.java" -exec sed -i 's/import android.support.annotation.NonNull;/import androidx.annotation.NonNull;/g' {} +
       working-directory: android
 
     - name: Grant Execute Permission for Gradle
