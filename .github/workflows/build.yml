@@ -23,8 +23,15 @@ jobs:
         sed -i '/import android.support.annotation.NonNull;/d' android/app/src/main/java/com/watchcam/*.java
         sed -i 's/@NonNull//g' android/app/src/main/java/com/watchcam/*.java
 
-    - name: Force Modern Compile SDK Versions
+    - name: Upgrade Build Tools and SDK Versions
       run: |
+        # Force updated gradle wrapper version to support newer SDK tools
+        echo "distributionUrl=https\://services.gradle.org/distributions/gradle-8.0-bin.zip" > gradle/wrapper/gradle-wrapper.properties
+        
+        # Upgrade Android Gradle Plugin to a stable modern version
+        sed -i 's/dependencies {/dependencies {\n        classpath "com.android.tools.build:gradle:8.0.2"/g' build.gradle
+        
+        # Force app configuration to use Compile SDK 34 and Target SDK 34
         sed -i 's/compileSdkVersion .*/compileSdkVersion 34/g' app/build.gradle
         sed -i 's/targetSdkVersion .*/targetSdkVersion 34/g' app/build.gradle
       working-directory: android
