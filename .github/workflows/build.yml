@@ -11,16 +11,18 @@ jobs:
     - name: Checkout Source Code
       uses: actions/checkout@v4
 
-    - name: Set up JDK 8
+    - name: Set up JDK 17
       uses: actions/setup-java@v4
       with:
-        java-version: '8'
+        java-version: '17'
         distribution: 'temurin'
+        cache: gradle
 
-    - name: Force Legacy Support Properties
+    - name: Force Fix AndroidX Imports Across Files
       run: |
-        echo "android.useAndroidX=false" > gradle.properties
-        echo "android.enableJetifier=false" >> gradle.properties
+        echo "android.useAndroidX=true" > gradle.properties
+        echo "android.enableJetifier=true" >> gradle.properties
+        find app/src/main/java -type f -name "*.java" -exec sed -i 's/import android.support.annotation.NonNull;/import androidx.annotation.NonNull;/g' {} +
       working-directory: android
 
     - name: Grant Execute Permission for Gradle
