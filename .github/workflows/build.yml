@@ -18,6 +18,12 @@ jobs:
         distribution: 'temurin'
         cache: gradle
 
+    - name: Force Jetifier Properties
+      run: |
+        echo "android.useAndroidX=true" >> gradle.properties
+        echo "android.enableJetifier=true" >> gradle.properties
+      working-directory: android
+
     - name: Grant Execute Permission for Gradle
       run: chmod +x gradlew
       working-directory: android
